@@ -3,7 +3,8 @@ class Message < ActiveRecord::Base
   #validates_presence_of :receiver
 
   def receiver=(phone_number)
-    write_attribute :receiver_id, Receiver.find_or_create_by(:phone => phone_number).id
+    @receiver_id = Receiver.find_or_create_by(:phone => phone_number).id
+    write_attribute :receiver_id, @receiver_id
   end
 
   def send!
