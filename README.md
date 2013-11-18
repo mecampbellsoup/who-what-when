@@ -3,7 +3,7 @@
 Who-What-When is a Rails application that lets you draft text messages and send them at a later date. Our inspiration is [Gmail's Boomerang plugin](http://www.boomeranggmail.com/).
 
 ##Usage
-1. Visit http://bit.ly/text-me-later
+1. Visit http://bit.ly/textmelater
 2. Enter the "who" (recipient phone number)
 3. Enter the "what" (message body)
 4. Enter the "when" (when you want to receive a reminder containing the "what" to be sent to the "who")
