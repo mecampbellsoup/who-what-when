@@ -1,0 +1,9 @@
+<%= form_for(@message) do |f| %>
+  <%= f.label :receiver, "Who" %>
+  <%= f.text_field :receiver %>
+  <%= f.label :body, "What" %>
+  <%= f.text_field :body %>
+  <%= f.label :send_at, "When" %>
+  <%= f.text_field :send_at %>
+  <%= f.submit "Send that shit!" %>
+<% end %>
