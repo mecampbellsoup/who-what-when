@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.create(message_params)
     if @message.send!
-      render :new
+      redirect_to new_message_path
     end
   end
 
