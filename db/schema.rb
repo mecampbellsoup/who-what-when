@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131118205415) do
+ActiveRecord::Schema.define(version: 20131118210601) do
 
   create_table "messages", force: true do |t|
-    t.string   "from"
     t.string   "body"
     t.datetime "send_at"
     t.datetime "created_at"
