@@ -7,6 +7,10 @@ class Message < ActiveRecord::Base
     write_attribute :receiver_id, @receiver_id
   end
 
+  def send_at=(date)
+    write_attribute :send_at, Chronic.parse(date)
+  end
+
   def send!
     # later will add 'send_at' param for the boomerang effect
     twilio_sid = ENV['TWILIO_SID']
