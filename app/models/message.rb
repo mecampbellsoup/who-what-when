@@ -8,7 +8,8 @@ class Message < ActiveRecord::Base
   end
 
   def send_at=(date)
-    write_attribute :send_at, Chronic.parse(date)
+    date = Chronic.parse(date) || Time.now
+    write_attribute :send_at, date
   end
 
   def send!
