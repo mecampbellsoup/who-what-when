@@ -18,10 +18,23 @@ class Message < ActiveRecord::Base
   def self.create_from_text_message(params)
    @message = Message.new
    @message.receiver = params["From"]
-   @message.body = params["Body"]
-   @message.send_time
+   @message.body = parse_body_from_text_sentence(params["Body"])
+   if send_time != nil 
+     @message.send_time
+   else
+     arse_time_from_text_sentence(params["Body"])
+   end
    @message.save
    @message
   end
+
+  def parse_time_from_text_sentence(sentence)
+    Chronic.parse(sentence.split(":").last)
+  end
+
+  def parse_body_from_text_sentence(sentence)
+    body = sentence.split(":").first
+  end
+
 
 end
