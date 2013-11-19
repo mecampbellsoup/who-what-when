@@ -17,3 +17,4 @@
 
 # Ignore .env for use with dotenv gem
 /.env
+/coverage
