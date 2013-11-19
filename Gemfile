@@ -37,6 +37,8 @@ end
 
 gem 'chronic'
 
+gem 'sidekiq'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
