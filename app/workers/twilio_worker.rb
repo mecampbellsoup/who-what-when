@@ -1,4 +1,5 @@
 class TwilioWorker
+  
   include Sidekiq::Worker
 
   def perform(message_id)
