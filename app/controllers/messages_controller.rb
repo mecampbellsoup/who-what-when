@@ -7,10 +7,9 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.create(message_params)
-
-    if @message.send!
-      redirect_to new_message_path
-    end
+    TwilioWorker.perform_async("send message", @message.id)
+    redirect_to root_path
+    #end
   end
 
   private

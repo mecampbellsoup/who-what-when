@@ -13,6 +13,15 @@ Who-What-When is a Rails application that lets you draft text messages and send 
 - Rails 4.0
 - Ruby 2.0
 
+##Run locally
+1. Download the most recent branch and ```bundle install```
+2. Make sure you have redis installed: ```brew install redis```
+3. Open three terminal windows in the root of the rails app, and execute the following commands, each in a seperate window, in the following order: 
+
+		$  redis-server /usr/local/etc/redis.conf
+		$  bundle exec sidekiq
+		$  rails server
+
 ##Contributing
 If you'd like to hack on this, start by forking the repo on GitHub:
 
