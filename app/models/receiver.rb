@@ -1,6 +1,6 @@
 class Receiver < ActiveRecord::Base
   has_many :messages
-  before_save :format_phone_number
+  after_create :format_phone_number
 
   private
 

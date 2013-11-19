@@ -7,33 +7,30 @@ class Message < ActiveRecord::Base
   end
 
   def send_at=(date)
-    date = Chronic.parse(date) || Time.now
-    write_attribute :send_at, date
-  end
-
-  def send_time
-    write_attribute :send_at, Time.now
+    if date.is_a?(Time)
+      write_attribute :send_at, date
+    else
+      date = Chronic.parse(date) || Time.now
+      write_attribute :send_at, date
+    end
   end
 
   def self.create_from_text_message(params)
-   @message = Message.new
-   @message.receiver = params["From"]
-   @message.body = parse_body_from_text_sentence(params["Body"])
-   if send_time != nil 
-     @message.send_time
-   else
-     parse_time_from_text_sentence(params["Body"])
-   end
-   @message.save
-   @message
+
+    @message = Message.new
+    @message.update(:receiver => params["From"],
+                    :body     => parse_body_from_text_sentence(params["Body"]),
+                    :send_at  => parse_time_from_text_sentence(params["Body"])
+    )
+    @message
   end
 
-  def parse_time_from_text_sentence(sentence)
-    Chronic.parse(sentence.split(":").last)
+  def self.parse_time_from_text_sentence(sentence)
+    Chronic.parse("in #{sentence.split("in").last.strip}")
   end
 
-  def parse_body_from_text_sentence(sentence)
-    body = sentence.split(":").first
+  def self.parse_body_from_text_sentence(sentence)
+    sentence.split("in").first.strip
   end
 
 

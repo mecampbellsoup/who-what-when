@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Message do
   context "creating a message from the website" do 
     before :each do 
-      @params = {"receiver"=>"+13432", "body"=>"sdfsf", "send_at"=>"dfdf"}
+      @params = {"receiver"=>"+1 343 223 5323", "body"=>"sdfsf", "send_at"=>"in 5 seconds"}
       @message = Message.create(@params)
     end
 
@@ -12,7 +12,7 @@ describe Message do
     end
 
     it "creates or assigns a receiver" do 
-      expect(@message.receiver.phone).to eq @params["receiver"]
+      expect(@message.receiver).to be_a(Receiver)
     end
 
     it "assigns the message body to the params form" do 
@@ -34,9 +34,9 @@ describe Message do
 
   context "creating a message from a text message" do 
     before :each do 
-      @params = {"AccountSid"=>"AC", "MessageSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "Body"=>"Body of the message", "ToZip"=>"11238", "ToCity"=>"BROOKLYN", "FromState"=>"CA", "ToState"=>"NY", "SmsSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "To"=>"+13476948027", "ToCountry"=>"US", "FromCountry"=>"US", "SmsMessageSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "ApiVersion"=>"2010-04-01", "FromCity"=>"ALHAMBRA", "SmsStatus"=>"received", "NumMedia"=>"0", "From"=>"+16262444636", "FromZip"=>"91006"}  
+      @params = {"Body"=>"Body of the message in 30 seconds", "AccountSid"=>"AC", "MessageSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "ToZip"=>"11238", "ToCity"=>"BROOKLYN", "FromState"=>"CA", "ToState"=>"NY", "SmsSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "To"=>"+13476948027", "ToCountry"=>"US", "FromCountry"=>"US", "SmsMessageSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "ApiVersion"=>"2010-04-01", "FromCity"=>"ALHAMBRA", "SmsStatus"=>"received", "NumMedia"=>"0", "From"=>"+16262444636", "FromZip"=>"91006"}  
       @message = Message.create_from_text_message(@params)
-    end  
+    end
 
     it "creates a message" do 
       expect(@message).to be_a Message
@@ -47,10 +47,12 @@ describe Message do
     end
 
     it "assigns a text message to the time in the body" do 
-      expect(@message.body).to eq @params["Body"]
+      expect(@message.body).to eq "Body of the message"
     end
 
-    it "correctly parses the time from the message" 
+    it "correctly parses the time from the message" do
+      expect(@message.send_at).to be_a(Time)
+    end
 
     it "assign's a receiver's phone number to the params entry" do 
       expect(@message.receiver.phone).to eq @params["From"]

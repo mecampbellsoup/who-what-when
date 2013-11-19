@@ -12,6 +12,13 @@ class MessagesController < ApplicationController
     #end
   end
 
+  def create_from_reply
+    @message = Message.create_from_text_message(params)
+    TwilioWorker.perform_at(@message.send_at, @message.id)
+    render :nothing
+  end
+
+
   private
     def message_params
       params.require(:message).permit(:receiver, :body, :send_at)
