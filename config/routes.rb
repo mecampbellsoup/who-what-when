@@ -2,7 +2,6 @@ TextMeLater::Application.routes.draw do
 
   resources :messages
   root 'messages#new'
-  mount Sidekiq::Web, at: "/sidekiq"
 
   require 'sidekiq/web'
 
