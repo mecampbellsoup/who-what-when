@@ -1,10 +1,13 @@
 <div class="container">
-<%= form_for @message, :html => {:class => 'form-signin'} do |f| %>
-<!-- form_for @user, :html => {:class => 'x', 'data-bar' => 'baz'} do |f| -->
-  <h2 class="form-signin-heading">Who What When</h2>
-  <%= f.phone_field :receiver, :class => 'form-control', :placeholder => "Enter a phone number" %>
-  <%= f.text_field :body, :class => 'form-control', :placeholder => "Your text message" %>
-  <%= f.text_field :send_at, :class => 'form-control', :placeholder => "When to send. i.e. 'in 5 minutes' 'in one hour'" %>
-  <%= f.submit "Schedule text message", :class => 'btn btn-lg btn-primary btn-block' %>
-<% end %>
+  <div class="duckie-center">
+    <img src="http://sweetclipart.com/multisite/sweetclipart/files/rubber_ducky_yellow.png" width="72" height="56">
+  </div>
+  <%= form_for @message, :html => {:class => 'form-signin'} do |f| %>
+  <!-- form_for @user, :html => {:class => 'x', 'data-bar' => 'baz'} do |f| -->
+    <h2 class="form-signin-heading text-center">Who What When</h2>
+    <%= f.phone_field :receiver, :class => 'form-control', :placeholder => "Enter a phone number" %>
+    <%= f.text_field :body, :class => 'form-control', :placeholder => "Your text message" %>
+    <%= f.text_field :send_at, :class => 'form-control', :placeholder => "When to send. i.e. 'in 5 minutes' 'in one hour'" %>
+    <%= f.submit "Schedule text message", :class => 'btn btn-lg btn-primary btn-block' %>
+  <% end %>
 </div>
