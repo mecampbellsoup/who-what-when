@@ -2,6 +2,7 @@ TextMeLater::Application.routes.draw do
 
   resources :messages
   root 'messages#new'
+  mount Sidekiq::Web, at: "/sidekiq"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

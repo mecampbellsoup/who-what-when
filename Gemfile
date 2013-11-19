@@ -12,8 +12,9 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'twilio-ruby'
 gem 'chronic'
-#gem 'redis'
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 
 group :doc do
