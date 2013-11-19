@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
 
   def new
-    @receiver = Receiver.new
     @message = Message.new
   end
 
