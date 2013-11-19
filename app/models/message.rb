@@ -23,4 +23,5 @@ class Message < ActiveRecord::Base
    @message.save
    @message
   end
+
 end
