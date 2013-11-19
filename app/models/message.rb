@@ -22,7 +22,7 @@ class Message < ActiveRecord::Base
    if send_time != nil 
      @message.send_time
    else
-     arse_time_from_text_sentence(params["Body"])
+     parse_time_from_text_sentence(params["Body"])
    end
    @message.save
    @message
