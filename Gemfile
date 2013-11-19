@@ -12,9 +12,9 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'twilio-ruby'
 gem 'chronic'
-#gem 'redis'
 gem 'sidekiq'
-
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'thin'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
