@@ -4,6 +4,9 @@ TextMeLater::Application.routes.draw do
   root 'messages#new'
 
   require 'sidekiq/web'
+
+  post '/receive' => 'receivers#create'
+  
   mount Sidekiq::Web => '/sidekiq'
 
   # The priority is based upon order of creation: first created -> highest priority.

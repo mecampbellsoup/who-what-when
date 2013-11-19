@@ -11,4 +11,16 @@ class Message < ActiveRecord::Base
     write_attribute :send_at, date
   end
 
+  def send_time
+    write_attribute :send_at, Time.now
+  end
+
+  def self.create_from_text_message(params)
+   @message = Message.new
+   @message.receiver = params["From"]
+   @message.body = params["Body"]
+   @message.send_time
+   @message.save
+   @message
+  end
 end
