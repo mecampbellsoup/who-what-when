@@ -6,9 +6,11 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.create(message_params)
+    @message = Message.new(message_params)
 
-    if @message.send!
+    if @message.save
+      TwilioWorker.perform_at(@message.send_at, @message.id)
+      binding.pry
       redirect_to new_message_path
     end
   end

@@ -38,6 +38,8 @@ end
 gem 'chronic'
 
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
