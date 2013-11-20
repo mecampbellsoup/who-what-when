@@ -11,5 +11,9 @@ module MessagesHelper
     end
     digits
   end
+
+  def from_twilio?
+    params["From"].present?
+  end
   
 end
