@@ -2,6 +2,8 @@ class Receiver < ActiveRecord::Base
   has_many :messages
   before_create :format_phone_number
 
+  validates :phone, length: { minimum: 10, :too_short => "digits ain't right - please enter at least %{count} of them" }
+
   include Textable
 
   private
