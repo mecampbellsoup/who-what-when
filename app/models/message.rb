@@ -1,9 +1,10 @@
 class Message < ActiveRecord::Base
   belongs_to :receiver
 
+  extend Textable
+
   def receiver=(phone_number)
-    @receiver_id = Receiver.find_or_create_by(:phone => phone_number).id
-    write_attribute :receiver_id, @receiver_id
+    self.receiver.build_from_message(phone_number)
   end
 
   def send_at=(date)
@@ -14,24 +15,5 @@ class Message < ActiveRecord::Base
       write_attribute :send_at, date
     end
   end
-
-  def self.create_from_text_message(params)
-
-    @message = Message.new
-    @message.update(:receiver => params["From"],
-                    :body     => parse_body_from_text_sentence(params["Body"]),
-                    :send_at  => parse_time_from_text_sentence(params["Body"])
-    )
-    @message
-  end
-
-  def self.parse_time_from_text_sentence(sentence)
-    Chronic.parse("in #{sentence.split("in").last.strip}")
-  end
-
-  def self.parse_body_from_text_sentence(sentence)
-    sentence.split("in").first.strip
-  end
-
 
 end

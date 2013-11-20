@@ -1,6 +1,13 @@
 class Receiver < ActiveRecord::Base
   has_many :messages
-  after_create :format_phone_number
+  after_save :format_phone_number
+
+  def build_from_message(phone_number)
+    # this method takes a phone number string and
+    # finds or builds a Receiver object
+    @id = Receiver.find_or_create_by(:phone => phone_number).id
+    write_attribute :id, @id
+  end
 
   private
 
