@@ -1,20 +1,17 @@
 class MessagesController < ApplicationController
-  
-  include MessagesHelper
 
   def new
     @message = Message.new
   end
 
   def create_from_web
-    @receiver = Receiver.find_or_create_by(:phone => format_phone_number(params[:message][:receiver]))
-    @message = @receiver.messages.create(message_params)
+    @message = Message.create_from_web(message_params)
     TwilioWorker.perform_at(@message.send_at, @message.id)
     redirect_to root_path
   end
 
   def create_from_text_message
-    @message = Message.create_from_sms(params)
+    @message = Message.create_from_text_message(params)
     TwilioWorker.perform_at(@message.send_at, @message.id)
     render :nothing => true
   end
@@ -22,6 +19,6 @@ class MessagesController < ApplicationController
 
   private
     def message_params
-      params.require(:message).permit(:body, :send_at)
+      params.require(:message).permit(:body, :send_at, :receiver )
     end
 end
