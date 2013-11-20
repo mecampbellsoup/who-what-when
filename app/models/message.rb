@@ -1,5 +1,6 @@
 class Message < ActiveRecord::Base
   belongs_to :receiver
+  validates :body, :send_at, :presence => true
 
   def send_at=(date)
     if !date.is_a?(Time)
