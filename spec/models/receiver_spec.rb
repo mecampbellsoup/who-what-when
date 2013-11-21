@@ -2,15 +2,36 @@ require 'spec_helper'
 
 describe Receiver do
 
-  before :each do
-    Receiver.create(:phone => "740 319 0208")
-  end
-
   context 'phone number sanitization' do
-    it 'has a sanitization method that hooks into creation' do
-      expect(Receiver.find_by(:phone => "+17403190208")).to be()
+
+    it "removes spaces and adds a +" do 
+      receiver = Receiver.create(:phone => "1 646 555 5553")
+      expect(receiver.phone).to eq("+16465555553")
     end
 
+    it "removes spaces and adds a +1" do 
+      receiver = Receiver.create(:phone => "646 555 5553")
+      expect(receiver.phone).to eq("+16465555553")
+    end
+
+    it "rejects numbers with less than ten digits" do 
+      receiver = Receiver.new(:phone => "123")
+      expect(receiver).to have(1).error_on(:phone)
+    end
+
+    it "truncates numbers with more than ten digits" do 
+      receiver = Receiver.new(:phone => "555 555 5555 555")
+      expect(receiver.phone).to have_at_least(1).error_on(:phone)
+    end
+
+    it "rejects numbers which contain non-numerical characters" do 
+      receiver = Receiver.new(:phone => "1dfgdg234sfsf456sdf7890")
+      expect(receiver.phone).to have_at_least(1).error_on(:phone)
+    end
+  end
+end
+
+=begin
     it 'parses basically every phone number into our 10-digit format' do
       receiver = Receiver.new(:phone => "1 646 555 5553")
       receiver.save
@@ -45,3 +66,4 @@ describe Receiver do
   end
 
 end
+=end
