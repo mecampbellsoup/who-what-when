@@ -51,6 +51,10 @@ $(document).ready(function () {
       success: function(data) {
         $('#duck-form').trigger("reset");
         $('.bubble').addClass('showDuck');
+        setTimeout(function(){
+          $('.bubble').removeClass('showDuck', 500);
+        }, 2500);
+        $('#submit_button').addClass('disabled').attr('disabled', true);
       }
     });
 
