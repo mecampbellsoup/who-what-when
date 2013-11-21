@@ -34,11 +34,11 @@ describe Message do
       expect(@message).to have(1).error_on(:body)
     end
 
-    it 'cannot createa a time without a send_at value' do
-      params = { :body => "hi buddy", :send_at => ""}
-      @message = @receiver.create_from_web(params)
-      expect(@message.send_at).to be_within(1).of(Time.now)
-    end
+    # it 'cannot create a time without a send_at value' do
+    #   params = { :body => "hi buddy", :send_at => ""}
+    #   @message = @receiver.create_from_web(params)
+    #   expect(@message.send_at).to be_within(1).of(Time.now)
+    # end
 
   end
 
@@ -52,6 +52,16 @@ describe Message do
       expect(Receiver.count).to eq 1
     end
   end
+
+  context "validations" do 
+    it 'should add an error to @message if an invalid time object is submitted via SMS' do
+      params = { :from => "+6262444636", :send_at => "mumbo jumbo", :body => "Message body", :to =>"+13476948027"}  
+      @message = @receiver.create_from_web(params)
+      expect(@message.body).to eq("Hello! You didn't send us a time. Please send again.")
+    end
+  end
+
+  
 
 
 #   context "creating a message from a text message" do 

@@ -10,11 +10,29 @@ module Textable
   end
 
   def parse_text_body_at_keyword(sentence)
-    sentence.split(locate_time_keyword(sentence)).first.strip
+    if keyword_found?(sentence) 
+      sentence.split(locate_time_keyword(sentence)).first.strip
+    else
+      nil
+    end
+  end
+
+  def keyword_found?(sentence)
+    sentence_array = sentence.split(" ")
+    if TimeKeywords.each { |keyword| break true if sentence_array.include?(keyword) } == true
+      return true
+    else
+      false
+    end
+
   end
 
   def parse_text_time_at_keyword(sentence)
-    Chronic.parse("#{locate_time_keyword(sentence)} #{sentence.split(locate_time_keyword(sentence)).last.strip}")
+    if keyword_found?(sentence) 
+      Chronic.parse("#{locate_time_keyword(sentence)} #{sentence.split(locate_time_keyword(sentence)).last.strip}")
+    else
+      nil
+    end
   end
 
   def new_message(params)

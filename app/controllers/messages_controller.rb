@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+
   include MessagesHelper
 
   before_action :set_receiver, :only => [:create]
@@ -21,16 +22,12 @@ class MessagesController < ApplicationController
     #end
 
     # make delegation method for this
+
     if @message.persisted?
-      TwilioWorker.perform_at(@message.send_at, @message.id)
+      queue_message_to_be_sent(@message.send_at, @message.id)
     end
     
-    if from_twilio?
-      render :nothing => true
-    else
-      flash.now[:message] = "Sent! Quack!"
-      render :new
-    end
+    render :nothing => true
   end
 
   private
@@ -46,4 +43,9 @@ class MessagesController < ApplicationController
         Receiver.find_or_create_by(:phone => (params[:message][:receiver]))
       end
     end
+
+    def queue_message_to_be_sent(time, message_id)
+      TwilioWorker.perform_at(time, message_id)
+    end
+
 end
