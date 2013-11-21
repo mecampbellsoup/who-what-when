@@ -12,7 +12,7 @@ class Receiver < ActiveRecord::Base
   private
 
     def format_phone_number
-      if self.phone
+      if self.phone && self.phone.is_a?(String)
         digits = self.phone.gsub(/\D/, '').split(//)
         if (digits.length == 11 and digits[0] == '1')
           # Strip leading 1

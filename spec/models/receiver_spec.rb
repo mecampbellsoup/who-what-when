@@ -28,10 +28,7 @@ describe Receiver do
       receiver = Receiver.new(:phone => "1dfgdg234sfsf456sdf7890")
       expect(receiver.phone).to have_at_least(1).error_on(:phone)
     end
-  end
-end
-
-=begin
+    
     it 'parses basically every phone number into our 10-digit format' do
       receiver = Receiver.new(:phone => "1 646 555 5553")
       receiver.save
@@ -56,14 +53,43 @@ end
 
     include Textable
     
+    before :each do
+      @receiver = create(:receiver)
+    end
+
     it 'parsing the sms body return by a user text message' do
-      receiver = Receiver.find_by(:phone => "+17403190208")
       sentence = "this sentence has the word on this gets cutoff"
-      first_keyword = receiver.locate_time_keyword(sentence)
+      first_keyword = @receiver.locate_time_keyword(sentence)
       expect(first_keyword).to eq "on"
+    end
+
+    it 'parsing the body with timewords inside other words does not return a match' do
+      sentence = "go shopping in 3 seconds"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(parse_text_body_at_keyword).to eq "go shopping"
+
+      sentence = "reminond me when it's sunday"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(first_keyword).to eq "when"
+
+      sentence = "only remind me on thursday"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(first_keyword).to eq "in"
+      sentence = "go shopping on Thursday"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(first_keyword).to eq "in"
+
+      sentence = "don't remind me until Friday"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(first_keyword).to eq "in"
+    end
+    
+    it 'parsing the body with multiple timewords returns the first match' do
+      sentence = "remind me because nothing inside ontime"
+      first_keyword = @receiver.locate_time_keyword(sentence)
+      expect(first_keyword).to eq false
     end
 
   end
 
 end
-=end
