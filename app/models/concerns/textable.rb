@@ -4,7 +4,7 @@ module Textable
 
   def locate_time_keyword(sentence)
     TimeKeywords.each do |w|
-      next if !sentence.index(w)
+      next if !sentence.index(/\s#{w}\s/)
       return sentence[sentence.index(w), w.length]
     end
   end
