@@ -12,13 +12,25 @@ describe MessagesController do
 
   describe "POST #create" do
     context "with form attributes" do
-
       it "redirects to the new page" do
         expect{
-          post :create, :message => FactoryGirl.attributes_for(:message)
+          post :create, {:message => attributes_for(:message).merge(:receiver => '917-753-3666')}
         }.to change{ Message.count }.by(1)
         response.should redirect_to root_path
       end
+    end
+
+    context "with invalid attributes" do
+      it "does not save the new message" do
+        expect{
+          post :create, {:message => attributes_for(:invalid_message).merge(:receiver => '917-753-3666')}
+        }.to_not change{ Message.count }
+      end
+
+      # it "re-renders the new method" do
+      #   post :create, contact: Factory.attributes_for(:invalid_contact)
+      #   response.should render_template :new
+      # end
     end
 
   end

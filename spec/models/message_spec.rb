@@ -4,7 +4,7 @@ describe Message do
   include MessagesHelper
 
   before :each do
-    @receiver = FactoryGirl.create(:receiver)
+    @receiver = create(:receiver)
   end
 
   context 'creating new messages' do

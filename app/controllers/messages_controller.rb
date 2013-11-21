@@ -10,23 +10,23 @@ class MessagesController < ApplicationController
   def create
     @message = @receiver.new_message(message_params)
 
-    # respond_to do |format|
-    #   if @message.persisted? && !from_twilio?
-    #     format.html { redirect_to root_path, :success => "Reminder sent!" }
-    #     format.js {}
-    #   elsif !@message.persisted?
-    #     format.html { render :new, :error => @message.errors.full_messages }
-    #     format.js {}
-    #   end
-    # end
-    # # make delegation method for this
-    # TwilioWorker.perform_at(@message.send_at, @message.id)
+    respond_to do |format|
+      if @message.persisted? && !from_twilio?
+        format.html { redirect_to root_path, :success => "Reminder sent!" }
+        format.js {}
+      elsif !@message.persisted?
+        format.html { render :new, :error => @message.errors.full_messages }
+        format.js {}
+      end
+    end
+    # make delegation method for this
+    TwilioWorker.perform_at(@message.send_at, @message.id)
     
-    # if from_twilio?
-    #   render :nothing => true
-    # else
+    if from_twilio?
+      render :nothing => true
+    else
       
-    # end
+    end
   end
 
   private
@@ -39,7 +39,7 @@ class MessagesController < ApplicationController
       @receiver = if from_twilio?
         Receiver.find_or_create_by(:phone => params["From"])
       else
-        Receiver.find_or_create_by(:phone => format_phone_number(params[:message][:receiver]))
+        Receiver.find_or_create_by(:phone => (params[:message][:receiver]))
       end
     end
 end
