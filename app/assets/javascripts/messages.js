@@ -50,15 +50,15 @@ $(document).ready(function () {
       data: submitField,
       success: function(data) {
         $('#duck-form').trigger("reset");
-        $('.bubble').addClass('showDuck');
-        setTimeout(function(){
-          $('.bubble').removeClass('showDuck', 500);
-        }, 2500);
+        $('.bubble').animate({ opacity: 1 }, 100, function() {
+          setTimeout(function() {
+            $('.bubble').animate({ opacity: 0 }, 200);
+              }, 1500);
+         });
         $('#submit_button').addClass('disabled').attr('disabled', true);
-      }
-    });
-
-  });
+       } /* success */
+   });/* $.ajax */
+  }); /* #submit_button click */
 
 });
 

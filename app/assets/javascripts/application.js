@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.effect.all
+//= require jquery.ui.all
 //= require turbolinks
 //= require bootstrap
 //= require jquery.form
