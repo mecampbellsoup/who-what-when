@@ -14,9 +14,9 @@ describe MessagesController do
     context "with form attributes" do
       it "redirects to the new page" do
         expect{
-          post :create, {:message => attributes_for(:message).merge(:receiver => '917-753-3666')}
+          xhr :post, :create, {:message => attributes_for(:message).merge(:receiver => '917-753-3666')}
         }.to change{ Message.count }.by(1)
-        response.should redirect_to root_path
+        expect(response.code).to eq("200")
       end
     end
 
