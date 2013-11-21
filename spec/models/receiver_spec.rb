@@ -65,23 +65,34 @@ describe Receiver do
 
     it 'parsing the body with timewords inside other words does not return a match' do
       sentence = "go shopping in 3 seconds"
-      first_keyword = @receiver.locate_time_keyword(sentence)
-      expect(parse_text_body_at_keyword).to eq "go shopping"
+      body = @receiver.parse_text_body_at_keyword(sentence)
+      time = @receiver.parse_text_time_at_keyword(sentence)
+      expect(body).to eq "go shopping"
+      expect(time).to be_within(0.05).of(Time.now + 3)
 
       sentence = "reminond me when it's sunday"
-      first_keyword = @receiver.locate_time_keyword(sentence)
-      expect(first_keyword).to eq "when"
+      body = @receiver.parse_text_body_at_keyword(sentence)
+      time = @receiver.parse_text_time_at_keyword(sentence)
+      expect(body).to eq "reminond me"
+      expect(time.sunday?).to be true
 
       sentence = "only remind me on thursday"
-      first_keyword = @receiver.locate_time_keyword(sentence)
-      expect(first_keyword).to eq "in"
+      body = @receiver.parse_text_body_at_keyword(sentence)
+      time = @receiver.parse_text_time_at_keyword(sentence)
+      expect(body).to eq "only remind me"
+      expect(time.thursday?).to be true
+
       sentence = "go shopping on Thursday"
-      first_keyword = @receiver.locate_time_keyword(sentence)
-      expect(first_keyword).to eq "in"
+      body = @receiver.parse_text_body_at_keyword(sentence)
+      time = @receiver.parse_text_time_at_keyword(sentence)
+      expect(body).to eq "go shopping"
+      expect(time.thursday?).to be true
 
       sentence = "don't remind me until Friday"
-      first_keyword = @receiver.locate_time_keyword(sentence)
-      expect(first_keyword).to eq "in"
+      body = @receiver.parse_text_body_at_keyword(sentence)
+      time = @receiver.parse_text_time_at_keyword(sentence)
+      expect(body).to eq "don't remind me"
+      expect(time.friday?).to be true
     end
     
     it 'parsing the body with multiple timewords returns the first match' do

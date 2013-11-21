@@ -3,28 +3,30 @@ module Textable
   TimeKeywords = ["in", "on", "when", "until"]
 
   def locate_time_keyword(sentence)
-
     keyword = TimeKeywords.each do |w|
       next if !sentence.index(/\s#{w}\s/)
-      return sentence[sentence.index(w), w.length] 
+      return sentence[sentence.index(/\s#{w}\s/)+1, w.length]
+      # this method should return the index to start split and the num characters/length
     end
 
     false if keyword.is_a?(Array) 
   end
 
   def parse_text_body_at_keyword(sentence)
+    # this method should use the starting point and num chars and then split there
     if locate_time_keyword(sentence) 
-      sentence.split(locate_time_keyword(sentence)).first.strip
+      sentence.split(" #{locate_time_keyword(sentence)} ").first.strip
     else
-      nil
+      false
     end
   end
 
   def parse_text_time_at_keyword(sentence)
-    if locate_time_keyword(sentence) 
-      Chronic.parse("#{locate_time_keyword(sentence)} #{sentence.split(locate_time_keyword(sentence)).last.strip}")
+    if locate_time_keyword(sentence)
+      time = sentence.split(" #{locate_time_keyword(sentence)} ").last.strip
+      Chronic.parse("#{locate_time_keyword(sentence)} #{time}") 
     else
-      nil
+      false
     end
   end
 
