@@ -32,5 +32,29 @@ $(document).ready(function () {
 
   $('#submit_button').addClass('disabled').attr('disabled', true);
 
+  var submitField = {};
+
+  $('#submit_button').on('click', function() {
+
+    $.each($('#duck-form input'), function(i, formObj) {
+        var name = formObj.name;
+        var val = formObj.value;
+        if (name != "commit") {
+          submitField[name] = val;
+        }
+    });
+
+    $.ajax({
+      url: '/messages',
+      type: "POST",
+      data: submitField,
+      success: function(data) {
+        $('#duck-form').trigger("reset");
+        $('.bubble').addClass('showDuck');
+      }
+    });
+
+  });
+
 });
 

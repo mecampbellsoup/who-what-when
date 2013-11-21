@@ -36,7 +36,7 @@ class MessagesController < ApplicationController
   private
 
     def message_params
-      from_twilio? ? params : params.require(:message).permit(:body, :send_at)
+      from_twilio? ? params : params.require(:message).permit(:body, :send_at, :receiver)
     end
 
     def set_receiver

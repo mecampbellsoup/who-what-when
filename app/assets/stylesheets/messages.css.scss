@@ -72,7 +72,12 @@ body {
 }
 
 .bubble { /* our styles */
+  visibility: hidden;
   right: 40px;
   bottom: 20px;
   text-align: center;
+}
+
+.showDuck {
+  visibility: visible !important; 
 }

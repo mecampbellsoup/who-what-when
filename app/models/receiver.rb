@@ -4,9 +4,7 @@ class Receiver < ActiveRecord::Base
 
   validates :phone, length: { 
     minimum: 10, 
-    maximum: 10,
-    too_short: "digits ain't right - please enter at least %{count} of them",
-    too_long: "You entered too many characters" 
+    too_short: "digits ain't right - please enter at least %{count} of them"
   }
 
   include Textable
