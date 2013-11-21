@@ -18,7 +18,7 @@ module Textable
   end
 
   def new_message(params)
-    from_twilio? ? create_from_sms(params) : create_from_web(params)
+    from_twilio?(params) ? create_from_sms(params) : create_from_web(params)
   end
   
   def create_from_sms(params)
@@ -33,6 +33,10 @@ module Textable
       :body => params[:body],
       :send_at => params[:send_at]
     )
+  end
+
+  def from_twilio?(params)
+    params["From"].present?
   end
 
 

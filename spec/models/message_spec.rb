@@ -12,7 +12,7 @@ describe Message do
     it 'has a method called new_message' do
       expect(@receiver).to respond_to(:new_message)
     end
-
+    
     it 'with params["From"] will call create_from_text' do
       params = {"From" => "+17403190208", "Body" => "Body of the message in 30 seconds", "SmsSid"=>"SM37e06f9540c0943477d6a5ce974cc2fd", "To"=>"+13476948027"}  
       @message = @receiver.create_from_sms(params)

@@ -5,7 +5,11 @@ FactoryGirl.define do
     phone "+17403190208"
   end
 
-  factory :bad_receiver, :class => :receiver do
+  factory :bad_number_receiver, :parent => :receiver do
     phone "319-0208"
+  end
+
+  factory :no_number_receiver, :parent => :receiver do
+    phone nil
   end
 end
