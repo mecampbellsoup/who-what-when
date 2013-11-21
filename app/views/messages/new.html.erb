@@ -1,8 +1,14 @@
 <div class="container">
   <div class="duckie-center">
+    <% if flash[:message] %>
+    <div class="bubble"><%= flash[:message] %></div>
+  <% end %>
     <%= image_tag "rubber_ducky_yellow.png", width: 72, height: 56 %> 
   </div>
-  <%= form_for @message, :html => {:class => 'form-signin'} do |f| %>
+
+
+
+  <%= form_for Message.new, :html => {:class => 'form-signin'} do |f| %>
     <h2 class="form-signin-heading text-center">Who What When</h2>
     <div class="input-group form-www-field">
       <span class="input-group-addon">+1</span>
