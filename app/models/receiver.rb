@@ -1,6 +1,7 @@
 class Receiver < ActiveRecord::Base
   has_many :messages
-  before_validation :format_phone_number
+  before_validation :find_or_create_formatted_phone_number
+  validates_uniqueness_of :phone
 
   validates :phone, length: { 
     minimum: 10, 
@@ -23,6 +24,15 @@ class Receiver < ActiveRecord::Base
         end
         self.phone = digits
       end
+    end
+
+    def find_or_create_formatted_phone_number
+      self.format_phone_number
+      found = Receiver.find_by(:phone => self.phone)
+      if found
+        return found
+      else
+        Receiver.create(:phone => self.phone)
     end
 
 end
