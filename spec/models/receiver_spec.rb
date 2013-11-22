@@ -103,7 +103,7 @@ describe Receiver do
 
       it 'parsing the sms body & time with valid time following the keyword' do
         expect(body).to eq "go shopping"
-        expect(time).to be_within(0.01).of(Time.now + 3)
+        expect(time).to be_within(1).of(Time.now + 3)
       end
     end
 
