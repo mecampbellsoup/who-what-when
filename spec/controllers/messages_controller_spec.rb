@@ -27,10 +27,10 @@ describe MessagesController do
         }.to_not change{ Message.count }
       end
 
-      # it "re-renders the new method" do
-      #   post :create, contact: Factory.attributes_for(:invalid_contact)
-      #   response.should render_template :new
-      # end
+      it "re-renders the new method" do
+        post :create, {:message => attributes_for(:invalid_message).merge(:receiver => '917-753-3666')}
+        response.body.should be_blank
+      end
     end
 
   end

@@ -55,26 +55,15 @@ describe Receiver do
 
     #let(:sentence) { "go shopping in 3 seconds" }
 
-    let(:body) { body =
+    let(:body) {
       receiver.parse_text_body_at_keyword(sentence)
     }
       
-    let(:time) { time =
+    let(:time) {
       receiver.parse_text_time_at_keyword(sentence)
     }
 
     let(:receiver) { create(:receiver) }
-
-    let(:passing_sentences) do
-      [
-        "this sentence has the word on this gets cutoff",
-        "go shopping in 3 seconds",
-        "reminond me it's sunday",
-        "only remind me on thursday",
-        "go shopping on Thursday",
-        "don't remind me until Friday"
-      ]
-    end
 
     @failing_sentences =
       [
@@ -85,11 +74,6 @@ describe Receiver do
         "go shopping Thursday",
         "don't re-until-mind me Friday"
       ]
-
-    it 'parsing the sms body return by a user text message' do
-      first_keyword = receiver.locate_time_keyword(sentence)
-      expect(first_keyword).to eq "on"
-    end
 
     @failing_sentences.each do |sentence|
       context sentence do
@@ -103,26 +87,65 @@ describe Receiver do
       end
     end
 
-    # it 'parsing the body with timewords inside other words does not return a match' do
+    context "this sentence indeed has the word on thursday" do |s|
 
-    #   expect(body).to eq "reminond me"
-    #   expect(time.sunday?).to be true
+      let(:sentence) { s.description }
 
-    #   expect(body).to eq "only remind me"
-    #   expect(time.thursday?).to be true
+      it 'parsing the sms body & time with valid time following the keyword' do
+        expect(body).to eq "this sentence indeed has the word"
+        expect(time.thursday?).to be true
+      end
+    end
 
-    #   expect(body).to eq "go shopping"
-    #   expect(time.thursday?).to be true
+    context "go shopping in 3 seconds" do |s|
 
-    #   expect(body).to eq "don't remind me"
-    #   expect(time.friday?).to be true
-    # end
-    
-    # it 'parsing the body with multiple timewords returns the first match' do
-    #   sentence = "remind me because nothing inside ontime"
-    #   first_keyword = receiver.locate_time_keyword(sentence)
-    #   expect(first_keyword).to eq false
-    # end
+      let(:sentence) { s.description }
+
+      it 'parsing the sms body & time with valid time following the keyword' do
+        expect(body).to eq "go shopping"
+        expect(time).to be_within(0.01).of(Time.now + 3)
+      end
+    end
+
+    context "reminond me when it's sunday" do |s|
+
+      let(:sentence) { s.description }
+
+      it 'parsing the body with multiple timewords returns the first match' do
+        expect(body).to eq "reminond me"
+        expect(time.sunday?).to be true
+      end
+    end
+
+    context "only remind me on thursday" do |s|
+
+      let(:sentence) { s.description }
+
+      it 'parsing the sms body & time with valid time following the keyword' do
+        expect(body).to eq "only remind me"
+        expect(time.thursday?).to be true
+      end
+    end
+
+    context "go shopping on saturday" do |s|
+
+      let(:sentence) { s.description }
+
+      it 'parsing the sms body & time with valid time following the keyword' do
+        expect(body).to eq "go shopping"
+        expect(time.saturday?).to be true
+      end
+    end
+
+    context "don't remind me until Friday" do |s|
+
+      let(:sentence) { s.description }
+
+      it 'parsing the sms body & time with valid time following the keyword' do
+        expect(body).to eq "don't remind me"
+        expect(time.friday?).to be true
+      end
+    end
 
   end
 
