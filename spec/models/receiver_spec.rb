@@ -16,7 +16,7 @@ describe Receiver do
 
     it "rejects numbers with less than ten digits" do 
       receiver = Receiver.new(:phone => "123")
-      expect(receiver).to have(1).error_on(:phone)
+      expect(receiver).to have_at_least(1).error_on(:phone)
     end
 
     it "truncates numbers with more than ten digits" do 
@@ -42,7 +42,7 @@ describe Receiver do
 
     it 'is invalid if its phone does not contain 10 digits' do
       receiver = Receiver.new(:phone => "319-0208")
-      expect(receiver).to have(1).error_on(:phone)
+      expect(receiver).to have_at_least(1).error_on(:phone)
       expect { receiver.save! }.to raise_exception ActiveRecord::RecordInvalid
       expect(receiver.errors.full_messages).to include("Phone digits ain't right - please enter at least 10 of them")
     end

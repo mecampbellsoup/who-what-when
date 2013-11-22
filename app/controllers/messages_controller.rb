@@ -3,10 +3,7 @@ class MessagesController < ApplicationController
   include MessagesHelper
 
   before_action :set_receiver, :only => [:create]
-
-  def new
-  end
-
+  
   def create
     @message = @receiver.new_message(message_params)
 
@@ -29,8 +26,6 @@ class MessagesController < ApplicationController
       else
         Receiver.find_or_create_by(:phone => format_phone_number(params[:message][:receiver]))
       end
-      binding.pry
-
     end
 
     def queue_message_to_be_sent(time, message_id)

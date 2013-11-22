@@ -9,7 +9,8 @@ module MessagesHelper
     if (digits.length == 10)
       digits = '%s%s%s' % [ digits[0,3].unshift("+1").join, digits[3,3].join, digits[6,4].join ]
     end
-    digits
+    return digits if digits.is_a?(String)
+    digits.join
   end
 
   def from_twilio?
