@@ -27,8 +27,10 @@ class MessagesController < ApplicationController
       @receiver = if from_twilio?
         Receiver.find_or_create_by(:phone => params["From"])
       else
-        Receiver.find_or_create_by(:phone => (params[:message][:receiver]))
+        Receiver.find_or_create_by(:phone => format_phone_number(params[:message][:receiver]))
       end
+      binding.pry
+
     end
 
     def queue_message_to_be_sent(time, message_id)
