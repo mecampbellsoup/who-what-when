@@ -11,10 +11,12 @@ $(document).ready(function () {
           minlength: 14 /* to play nice with formatter function */
         },
         'message[body]': {
-          required: true
+          required: true,
+          maxlength: 160
         },
         'message[send_at]' : {
-          required: true
+          required: true,
+          maxlength: 30
         }
       },
       showErrors: function(errorMap, errorList) {
@@ -34,7 +36,8 @@ $(document).ready(function () {
 
   var submitField = {};
 
-  $('#submit_button').on('click', function() {
+  $('#submit_button').on('click', function(e) {
+    e.preventDefault();
 
     $.each($('#duck-form input'), function(i, formObj) {
         var name = formObj.name;
