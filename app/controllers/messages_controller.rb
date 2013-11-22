@@ -11,18 +11,6 @@ class MessagesController < ApplicationController
   def create
     @message = @receiver.new_message(message_params)
 
-    #respond_to do |format|
-    #  if @message.persisted? && !from_twilio?
-    #    format.html { redirect_to root_path, :success => "Reminder sent!" }
-    #    format.js {}
-    #  elsif !@message.persisted?
-    #    format.html { render :new, :error => @message.errors.full_messages }
-    #    format.js {}
-    #  end
-    #end
-
-    # make delegation method for this
-
     if @message.persisted?
       queue_message_to_be_sent(@message.send_at, @message.id)
     end

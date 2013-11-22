@@ -1,9 +1,9 @@
 module Textable
 
-  TimeKeywords = ["in", "on", "when", "until"]
+  TIME_KEYWORDS = ["in", "on", "when", "until"]
 
   def locate_time_keyword(sentence)
-    keyword = TimeKeywords.each do |w|
+    keyword = TIME_KEYWORDS.each do |w|
       next if !sentence.index(/\s#{w}\s/)
       return sentence[sentence.index(/\s#{w}\s/)+1, w.length]
       # this method should return the index to start split and the num characters/length
