@@ -10,10 +10,10 @@ $(document).ready(function () {
           required: true,
           minlength: 14 /* to play nice with formatter function */
         },
-        'message[body]': {
-          required: true,
-          maxlength: 160
-        },
+       // 'message[body]': {
+        //  required: true,
+        //  maxlength: 160
+        //},
         'message[send_at]' : {
           required: true,
           maxlength: 30
@@ -59,7 +59,12 @@ $(document).ready(function () {
               }, 1500);
          });
         $('#submit_button').addClass('disabled').attr('disabled', true);
-       } /* success */
+       }, /* success */
+      error: function(xhr, ajaxOptions, thrownError) {
+        console.log(xhr);
+        console.log(ajaxOptions);
+        console.log(thrownError);
+      }
    });/* $.ajax */
   }); /* #submit_button click */
 

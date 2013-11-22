@@ -3,7 +3,7 @@ class Message < ActiveRecord::Base
   validates :body, :presence => true
 
   def send_at=(date)
-      validate(date)
+      date = validate(date)
       write_attribute :send_at, date
   end
 
@@ -38,7 +38,7 @@ class Message < ActiveRecord::Base
   end
      
   def create_error_message
-    self.body = "Hello! You didn't send us a time. Please send again."
+    #self.body = "Hello! You didn't send us a time. Please send again."
     send_error_message 
   end  
 

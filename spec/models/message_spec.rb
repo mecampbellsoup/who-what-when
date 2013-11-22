@@ -8,7 +8,6 @@ describe Message do
   end
 
   context 'creating new messages' do
-
     it 'has a method called new_message' do
       expect(@receiver).to respond_to(:new_message)
     end
@@ -26,9 +25,9 @@ describe Message do
       expect { @receiver.create_from_web(params) }.to change { Message.count }.by(1)
       expect(@message.receiver).to eq(@receiver)
     end
-
+    
     it 'cannot create a new message with no body' do
-      params = { :body => "", :send_at => "in 5 seconds"}
+      params = { :send_at => "in 5 seconds"}
       @message = @receiver.create_from_web(params)
       expect(Message.count).to eq 0
       expect(@message).to have(1).error_on(:body)
@@ -41,7 +40,6 @@ describe Message do
     # end
 
   end
-
   context "off of a single receiver" do 
     it "does not duplicate a receiver instance" do 
       5.times do 
