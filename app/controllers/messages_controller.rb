@@ -5,7 +5,6 @@ class MessagesController < ApplicationController
   before_action :set_receiver, :only => [:create]
 
   def new
-    @message = Message.new
   end
 
   def create
