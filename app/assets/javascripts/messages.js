@@ -11,10 +11,12 @@ $(document).ready(function () {
           minlength: 14 /* to play nice with formatter function */
         },
         'message[body]': {
-          required: true
+          required: true,
+          maxlength: 160
         },
         'message[send_at]' : {
-          required: true
+          required: true,
+          maxlenth: 30
         }
       },
       showErrors: function(errorMap, errorList) {
