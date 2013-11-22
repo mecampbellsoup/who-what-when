@@ -53,45 +53,10 @@ describe Message do
 
   context "validations" do 
     it 'should add an error to @message if an invalid time object is submitted via SMS' do
-      params = { :from => "+6262444636", :send_at => "mumbo jumbo", :body => "Message body", :to =>"+13476948027"}  
-      @message = @receiver.create_from_web(params)
-      expect(@message.body).to eq("Hello! You didn't send us a time. Please send again.")
+      params = { :from => "+6262444636", :send_at => "mumbo jumbo", :body => "Message body", :to =>"+13476948027"}
+      binding.pry 
+      expect(@receiver.create_from_web(params)).to raise_exception
     end
   end
-
-  
-
-
-#   context "creating a message from a text message" do 
-
-#     context "parsing sms replies from users" do
-      
-#       it "can parse the SMS body to extract reminder intervals only at in, on, until, or when" do
-#         params = {"Body" => "Our #create_from_sms method should get the following time in 30 seconds"}
-#       end
-
-#     end
-
-#     it "creates a message" do 
-#       expect(@message).to be_a Message
-#     end
-
-#     it "creates or assigns a receiver" do 
-#       expect(@message.receiver).to be_a Receiver
-#     end
-
-#     it "assigns a text message to the time in the body" do 
-#       expect(@message.body).to eq "Body of the message"
-#     end
-
-#     it "correctly parses the time from the message" do
-#       expect(@message.send_at).to be_a(Time)
-#     end
-
-#     it "assign's a receiver's phone number to the params entry" do 
-#       expect(@message.receiver.phone).to eq @params["From"]
-#     end
-
-#   end
 
 end
